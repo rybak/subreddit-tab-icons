@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Subreddit tab icons
 // @description  Replaces tab icons (favicons) on reddit with icons of subreddits.
-// @version      2
+// @version      3
 // @license      MIT
 // @author       Andrei Rybak
 // @match        https://www.reddit.com/r/*
@@ -60,6 +60,7 @@
 	 */
 	var delayMs = 1000;
 	const SPECIAL_NAMES = ['all', 'friends', 'popular'];
+	const DEFAULT_REDDIT_ICON = 'https://www.redditstatic.com/desktop2x/img/favicon/favicon-96x96.png';
 
 	let srDataUrl = '';
 	let srName = '';
@@ -85,7 +86,16 @@
 		}
 		srName = match[2];
 		if (SPECIAL_NAMES.includes(srName)) {
-			log(`Detected special subreddit "${srName}". Aborting.`);
+			log(`Detected special subreddit "${srName}". Resetting the icon to the default.`);
+			/*
+			 * Here we either on a special subreddit as a new page load,
+			 * or as a load-less switch in New Reddit.  In latter case,
+			 * we need to reset the icon from whatever previous subreddit
+			 * might have been loaded.
+			 */
+			setFavicon(DEFAULT_REDDIT_ICON, () => {
+				log('Could not reset the icon. Aborting.');
+			});
 			return;
 		}
 		const srUrl = match[0];
@@ -106,10 +116,12 @@
 			tryAgain(errorFn);
 			return;
 		}
-		log(`Using URL = "${url}". Done.`);
+		log('Using new URL =', url);
 		faviconNodes.forEach(node => {
+			log('Replacing old URL =', node.href);
 			node.href = url;
 		});
+		log('Done.');
 	}
 
 	/*
