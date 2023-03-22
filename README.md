@@ -1,6 +1,6 @@
 # Subreddit tab icons
 
-![Demonstration of the userscript "Subreddit tab icons" on subreddits r/science, r/Eyebleach, and r/Enhancement](https://i.imgur.com/RPAbQcb.png)
+[![Demonstration of the userscript "Subreddit tab icons" on subreddits r/science, r/Eyebleach, and r/Enhancement](images/before-after.png)](https://github.com/rybak/subreddit-tab-icons/raw/main/subreddit-tab-icons.user.js)
 
 This userscript replaces tab icons (favicons) on reddit.com with icons of
 subreddits. Works both on new.reddit.com and old.reddit.com. It helps
