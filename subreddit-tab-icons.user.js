@@ -1,14 +1,14 @@
 // ==UserScript==
 // @name         Subreddit tab icons
 // @description  Replaces tab icons (favicons) on reddit with icons of subreddits.
-// @version      1.1
+// @version      1.2
 // @license      MIT
 // @author       Andrei Rybak
 // @match        https://www.reddit.com/r/*
 // @match        https://new.reddit.com/r/*
 // @match        https://old.reddit.com/r/*
 // @icon         https://www.redditstatic.com/desktop2x/img/favicon/android-icon-192x192.png
-// @namespace    http://tampermonkey.net/
+// @namespace    https://github.com/rybak
 // @grant        none
 // ==/UserScript==
 
