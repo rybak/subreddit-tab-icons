@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Subreddit tab icons
 // @description  Replaces tab icons (favicons) on reddit with icons of subreddits.
-// @version      1
+// @version      1.1
 // @license      MIT
 // @author       Andrei Rybak
 // @match        https://www.reddit.com/r/*
@@ -62,12 +62,12 @@
 	const srNameRegex = /https:[/][/](www|old|new)[.]reddit[.]com[/]r[/](\w+)/g;
 	const match = srNameRegex.exec(document.location.href);
 	if (!match[0]) {
-		error(`Could not find subreddit URL in '${document.location.href}'`);
+		error(`Could not find subreddit URL in "${document.location.href}". Aborting.`);
 		return;
 	}
 	const srName = match[2];
 	if (SPECIAL_NAMES.includes(srName)) {
-		log(`Detected special subreddit '${srName}'. Aborting.`);
+		log(`Detected special subreddit "${srName}". Aborting.`);
 		return;
 	}
 	const srUrl = match[0];
@@ -86,7 +86,7 @@
 			tryAgain(errorFn);
 			return;
 		}
-		log(`Using URL = '${url}'. Done.`);
+		log(`Using URL = "${url}". Done.`);
 		faviconNodes.forEach(node => {
 			node.href = url;
 		});
@@ -107,7 +107,7 @@
 			return doc.documentElement.textContent;
 		}
 		const res = htmlDecode(url);
-		log(`Converted community_icon from '${url}' to '${res}'.`);
+		log(`Converted community_icon from "${url}" to "${res}".`);
 		return res;
 	}
 
@@ -145,13 +145,13 @@
 				 * the icon defined in the settings at all. Abort in
 				 * such cases.
 				 */
-				warn(`It seems that subreddit '${srName}' doesn't have its own icons defined. Aborting.`);
+				warn(`It seems that subreddit "${srName}" doesn't have its own icons defined. Aborting.`);
 			}
 			/*
 			 * Download data about the subreddit from Reddit API.
 			 * https://old.reddit.com/r/redditdev/comments/dot8tn/how_can_i_get_the_icon_of_a_subreddit/
 			 */
-			log(`Loading from '${srDataUrl}'...`);
+			log(`Loading from "${srDataUrl}"...`);
 			const srDataPromise = fetch(srDataUrl);
 			// https://stackoverflow.com/a/43175774/1083697
 			srDataPromise.then(res => res.json())
