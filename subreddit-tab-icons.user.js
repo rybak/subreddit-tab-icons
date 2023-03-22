@@ -226,6 +226,20 @@
 	}
 
 	replaceOnNewPage();
+
+	/*
+	 * Clicking on a link on New Reddit doesn't trigger a page load (sometimes,
+	 * at least).  To cover such cases, we need to automatically detect that
+	 * the subreddit in the URL has changed.
+	 *
+	 * For whatever reason (either limitations of userscripts, or trickery of
+	 * New Reddit, or both), listener for popstate events doesn't work to
+	 * detect a change in the URL.
+	 * https://developer.mozilla.org/en-US/docs/Web/API/Window/popstate_event
+	 *
+	 * As a workaround, observe the changes in the <title> tag, since most
+	 * subreddits will have different <title>s.
+	 */
 	const observer = new MutationObserver((mutationsList) => {
 		const maybeNewSrName = getSrName();
 		log('Mutation to', maybeNewSrName);
