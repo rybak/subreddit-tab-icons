@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Subreddit tab icons
 // @description  Replaces tab icons (favicons) on reddit with icons of subreddits.
-// @version      1.2
+// @version      2
 // @license      MIT
 // @author       Andrei Rybak
 // @match        https://www.reddit.com/r/*
@@ -61,19 +61,37 @@
 	var delayMs = 1000;
 	const SPECIAL_NAMES = ['all', 'friends', 'popular'];
 
-	const srNameRegex = /https:[/][/](www|old|new)[.]reddit[.]com[/]r[/](\w+)/g;
-	const match = srNameRegex.exec(document.location.href);
-	if (!match[0]) {
-		error(`Could not find subreddit URL in "${document.location.href}". Aborting.`);
-		return;
+	let srDataUrl = '';
+	let srName = '';
+
+	function getSrName() {
+		const srNameRegex = /https:[/][/](www|old|new)[.]reddit[.]com[/]r[/](\w+)/g;
+		log('Getting subreddit name from', document.location.href);
+		const match = srNameRegex.exec(document.location.href);
+		if (!match[0]) {
+			error(`Could not find subreddit URL in "${document.location.href}".`);
+			return '';
+		}
+		return match[2];
 	}
-	const srName = match[2];
-	if (SPECIAL_NAMES.includes(srName)) {
-		log(`Detected special subreddit "${srName}". Aborting.`);
-		return;
+
+	function replaceOnNewPage() {
+		log('Replacing on new page', document.location.href);
+		const srNameRegex = /https:[/][/](www|old|new)[.]reddit[.]com[/]r[/](\w+)/g;
+		const match = srNameRegex.exec(document.location.href);
+		if (!match[0]) {
+			error(`Could not find subreddit URL in "${document.location.href}". Aborting.`);
+			return;
+		}
+		srName = match[2];
+		if (SPECIAL_NAMES.includes(srName)) {
+			log(`Detected special subreddit "${srName}". Aborting.`);
+			return;
+		}
+		const srUrl = match[0];
+		srDataUrl = `${srUrl}/about.json`;
+		replaceFavicon();
 	}
-	const srUrl = match[0];
-	const srDataUrl = `${srUrl}/about.json`;
 
 	function tryAgain(errorFn) {
 		log(`Trying again after ${delayMs} ms...`);
@@ -195,5 +213,15 @@
 		}
 	}
 
-	replaceFavicon();
+	replaceOnNewPage();
+	const observer = new MutationObserver((mutationsList) => {
+		const maybeNewSrName = getSrName();
+		log('Mutation to', maybeNewSrName);
+		if (maybeNewSrName != srName) {
+			log('MutationObserver: subreddit has changed:', document.location.href);
+			replaceOnNewPage();
+		}
+	});
+	observer.observe(document.querySelector('title'), { subtree: true, characterData: true, childList: true });
+	log('Added MutationObserver');
 })();
