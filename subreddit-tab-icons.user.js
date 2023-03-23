@@ -1,12 +1,12 @@
 // ==UserScript==
 // @name         Subreddit tab icons
 // @description  Replaces tab icons (favicons) on reddit with icons of subreddits.
-// @version      3
+// @version      4
 // @license      MIT
 // @author       Andrei Rybak
-// @match        https://www.reddit.com/r/*
-// @match        https://new.reddit.com/r/*
-// @match        https://old.reddit.com/r/*
+// @match        https://www.reddit.com/*
+// @match        https://new.reddit.com/*
+// @match        https://old.reddit.com/*
 // @icon         https://www.redditstatic.com/desktop2x/img/favicon/android-icon-192x192.png
 // @namespace    https://github.com/rybak
 // @grant        none
@@ -69,8 +69,8 @@
 		const srNameRegex = /https:[/][/](www|old|new)[.]reddit[.]com[/]r[/](\w+)/g;
 		log('Getting subreddit name from', document.location.href);
 		const match = srNameRegex.exec(document.location.href);
-		if (!match[0]) {
-			error(`Could not find subreddit URL in "${document.location.href}".`);
+		if (!match || !match[0]) {
+			warn(`Could not find subreddit URL in "${document.location.href}".`);
 			return '';
 		}
 		return match[2];
@@ -92,8 +92,9 @@
 		log('Replacing on new page', document.location.href);
 		const srNameRegex = /https:[/][/](www|old|new)[.]reddit[.]com[/]r[/](\w+)/g;
 		const match = srNameRegex.exec(document.location.href);
-		if (!match[0]) {
-			error(`Could not find subreddit URL in "${document.location.href}". Aborting.`);
+		if (!match || !match[0]) {
+			warn(`Could not find subreddit URL in "${document.location.href}". Resetting the icon to the default.`);
+			resetToDefaultIcon();
 			return;
 		}
 		srName = match[2];
@@ -181,7 +182,8 @@
 				 * the icon defined in the settings at all. Abort in
 				 * such cases.
 				 */
-				warn(`It seems that subreddit "${srName}" doesn't have its own icons defined. Aborting.`);
+				warn(`It seems that subreddit "${srName}" doesn't have its own icons defined. Resetting the icon to the default.`);
+				resetToDefaultIcon();
 			}
 			/*
 			 * Download data about the subreddit from Reddit API.
