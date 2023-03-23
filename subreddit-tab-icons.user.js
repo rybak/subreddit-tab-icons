@@ -76,6 +76,18 @@
 		return match[2];
 	}
 
+	function resetToDefaultIcon() {
+		/*
+		 * Here we either on a special subreddit as a new page load,
+		 * or as a load-less switch in New Reddit.  In latter case,
+		 * we need to reset the icon from whatever previous subreddit
+		 * might have been loaded.
+		 */
+		setFavicon(DEFAULT_REDDIT_ICON, () => {
+			log('Could not reset the icon. Aborting.');
+		});
+	}
+
 	function replaceOnNewPage() {
 		log('Replacing on new page', document.location.href);
 		const srNameRegex = /https:[/][/](www|old|new)[.]reddit[.]com[/]r[/](\w+)/g;
@@ -87,15 +99,7 @@
 		srName = match[2];
 		if (SPECIAL_NAMES.includes(srName)) {
 			log(`Detected special subreddit "${srName}". Resetting the icon to the default.`);
-			/*
-			 * Here we either on a special subreddit as a new page load,
-			 * or as a load-less switch in New Reddit.  In latter case,
-			 * we need to reset the icon from whatever previous subreddit
-			 * might have been loaded.
-			 */
-			setFavicon(DEFAULT_REDDIT_ICON, () => {
-				log('Could not reset the icon. Aborting.');
-			});
+			resetToDefaultIcon();
 			return;
 		}
 		const srUrl = match[0];
