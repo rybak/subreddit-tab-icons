@@ -1,14 +1,14 @@
 // ==UserScript==
 // @name         Subreddit tab icons
 // @description  Replaces tab icons (favicons) on reddit with icons of subreddits.
-// @version      5
+// @version      5.1
 // @license      MIT
 // @author       Andrei Rybak
 // @match        https://www.reddit.com/*
 // @match        https://new.reddit.com/*
 // @match        https://old.reddit.com/*
 // @exclude      https://www.reddit.com/account/*
-// @exclude      https://www.reddit.com/account/*
+// @exclude      https://new.reddit.com/account/*
 // @icon         https://www.redditstatic.com/desktop2x/img/favicon/android-icon-192x192.png
 // @namespace    https://github.com/rybak
 // @homepageURL  https://github.com/rybak/subreddit-tab-icons
