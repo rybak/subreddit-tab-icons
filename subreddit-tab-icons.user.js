@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Subreddit tab icons
 // @description  Replaces tab icons (favicons) on reddit with icons of subreddits.
-// @version      5.1
+// @version      6
 // @license      MIT
 // @author       Andrei Rybak
 // @match        https://www.reddit.com/*
@@ -49,6 +49,9 @@
 	}
 	function warn(...toLog) {
 		console.warn(LOG_PREFIX, ...toLog);
+	}
+	function info(...toLog) {
+		console.info(LOG_PREFIX, ...toLog);
 	}
 	function log(...toLog) {
 		console.log(LOG_PREFIX, ...toLog);
@@ -118,9 +121,14 @@
 	}
 
 	function setFavicon(url, errorFn) {
-		const faviconNodes = document.querySelectorAll('link[rel="icon"]');
+		const selector = 'link[rel="icon"], link[rel="icon shortcut"], link[rel="apple-touch-icon"]';
+		const faviconNodes = document.querySelectorAll(selector);
 		if (!faviconNodes || faviconNodes.length == 0) {
-			warn("Couldn't find favicon elements.");
+			error('Cannot find favicon elements. Selector =', selector);
+			info('All link tags for the bug report:');
+			document.querySelectorAll('link').forEach(t => {
+				info(t);
+			});
 			tryAgain(errorFn);
 			return;
 		}
@@ -172,6 +180,9 @@
 				 */
 				const communityIcon = cleanUpCommunityIcon(data.community_icon);
 				const options = [communityIcon, data.icon_img, data.header_img];
+				if (DEBUG_ENABLED) {
+					debug('Options for', document.location.href, options);
+				}
 				for (const img of options) {
 					if (img && img.length > 0) {
 						setFavicon(img, replaceFaviconNew);
