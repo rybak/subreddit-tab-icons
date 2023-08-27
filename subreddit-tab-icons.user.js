@@ -73,7 +73,7 @@
 		log('Getting subreddit name from', document.location.href);
 		const match = srNameRegex.exec(document.location.href);
 		if (!match || !match[0]) {
-			warn(`Could not find subreddit URL in "${document.location.href}".`);
+			warn(`Cannot find subreddit URL in "${document.location.href}".`);
 			return '';
 		}
 		return match[2];
@@ -87,7 +87,7 @@
 		 * might have been loaded.
 		 */
 		setFavicon(DEFAULT_REDDIT_ICON, () => {
-			log(`Could not reset the icon for "${document.location.href}". Aborting.`);
+			log(`Cannot reset the icon for "${document.location.href}". Aborting.`);
 		});
 	}
 
@@ -96,7 +96,7 @@
 		const srNameRegex = /https:[/][/](www|old|new)[.]reddit[.]com[/]r[/](\w+)/g;
 		const match = srNameRegex.exec(document.location.href);
 		if (!match || !match[0]) {
-			warn(`Could not find subreddit URL in "${document.location.href}". Resetting the icon to the default.`);
+			warn(`Cannot find subreddit URL in "${document.location.href}". Resetting the icon to the default.`);
 			resetToDefaultIcon();
 			return;
 		}
