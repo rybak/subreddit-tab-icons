@@ -20,8 +20,8 @@ The source code is distributed under the terms of the MIT Licence.  See
      install a userscript manager")
 
 2. Once you have a browser extension for userscripts installed, just click on
-   button "Install" on [Greasy Fork][greasyfork].  The browser extension will
-   automagically detect the userscript.
+   button "Install this script" on [Greasy Fork][greasyfork].  The browser
+   extension will automagically detect the userscript.
 
 [![Badge showing number of installs from Greasy Fork](https://img.shields.io/badge/dynamic/json?style=flat&color=670000&label=Greasy%20Fork&query=total_installs&suffix=%20installs&url=https%3A%2F%2Fgreasyfork.org%2Fscripts%2F460086.json)][greasyfork]
 
