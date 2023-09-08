@@ -1,4 +1,5 @@
 [![Badge showing number of installs from Greasy Fork][GreasyForkInstallsBadge]][greasyfork]
+[![Badge showing version of the userscript][GreasyForkVersionBadge]][greasyfork]
 
 # Subreddit tab icons
 
@@ -27,3 +28,4 @@ The source code is distributed under the terms of the MIT Licence.  See
 
 [greasyfork]: https://greasyfork.org/en/scripts/460086-subreddit-tab-icons "Install via Greasy Fork"
 [GreasyForkInstallsBadge]: https://img.shields.io/badge/dynamic/json?style=flat&color=670000&label=Greasy%20Fork&query=total_installs&suffix=%20installs&url=https%3A%2F%2Fgreasyfork.org%2Fscripts%2F460086.json
+[GreasyForkVersionBadge]: https://img.shields.io/badge/dynamic/json?style=flat&color=670000&label=Version&query=version&url=https%3A%2F%2Fgreasyfork.org%2Fscripts%2F460086.json
