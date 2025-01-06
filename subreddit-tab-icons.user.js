@@ -111,7 +111,6 @@
 			resetToDefaultIcon();
 			return;
 		}
-		const srUrl = match[0];
 		srDataUrl = `https://www.reddit.com/r/${srName}/about.json`;
 		replaceFavicon();
 	}
