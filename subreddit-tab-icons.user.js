@@ -1,14 +1,16 @@
 // ==UserScript==
 // @name         Subreddit tab icons
 // @description  Replaces tab icons (favicons) on reddit with icons of subreddits.
-// @version      6
+// @version      7
 // @license      MIT
 // @author       Andrei Rybak
 // @match        https://www.reddit.com/*
 // @match        https://new.reddit.com/*
 // @match        https://old.reddit.com/*
+// @match        https://sh.reddit.com/*
 // @exclude      https://www.reddit.com/account/*
 // @exclude      https://new.reddit.com/account/*
+// @exclude      https://sh.reddit.com/account/*
 // @icon         https://www.redditstatic.com/desktop2x/img/favicon/android-icon-192x192.png
 // @namespace    https://github.com/rybak
 // @homepageURL  https://github.com/rybak/subreddit-tab-icons
@@ -16,7 +18,7 @@
 // ==/UserScript==
 
 /*
- * Copyright (c) 2023 Andrei Rybak
+ * Copyright (c) 2023-2025 Andrei Rybak
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -96,7 +98,7 @@
 
 	function replaceOnNewPage() {
 		log('Replacing on new page', document.location.href);
-		const srNameRegex = /https:[/][/](www|old|new)[.]reddit[.]com[/]r[/](\w+)/g;
+		const srNameRegex = /https:[/][/](www|old|new|sh)[.]reddit[.]com[/]r[/](\w+)/g;
 		const match = srNameRegex.exec(document.location.href);
 		if (!match || !match[0]) {
 			warn(`Cannot find subreddit URL in "${document.location.href}". Resetting the icon to the default.`);
@@ -110,7 +112,7 @@
 			return;
 		}
 		const srUrl = match[0];
-		srDataUrl = `${srUrl}/about.json`;
+		srDataUrl = `https://www.reddit.com/r/${srName}/about.json`;
 		replaceFavicon();
 	}
 

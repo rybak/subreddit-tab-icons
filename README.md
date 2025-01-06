@@ -6,7 +6,7 @@
 [![Demonstration of the userscript "Subreddit tab icons" on subreddits r/science, r/Eyebleach, and r/Enhancement](images/before-after.png)](https://github.com/rybak/subreddit-tab-icons/raw/main/subreddit-tab-icons.user.js)
 
 This userscript replaces tab icons (favicons) on <https://reddit.com> with icons
-of subreddits. Works both on new.reddit.com and old.reddit.com. It helps
+of subreddits. Works on old.reddit.com, new.reddit.com, and sh.reddit.com. It helps
 distinguishing tabs of different subreddits from each other. Note, that not all
 subreddits on Reddit have a separate icon.
 
