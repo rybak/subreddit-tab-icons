@@ -74,12 +74,12 @@
 	let srName = '';
 
 	function getSrName() {
-		const srNameRegex = /https:[/][/](www|old|new)[.]reddit[.]com[/]r[/](\w+)/g;
+		const srNameRegex = /https:[/][/](www|old|new|sh)[.]reddit[.]com[/]r[/](\w+)/g;
 		log('Getting subreddit name from', document.location.href);
 		const match = srNameRegex.exec(document.location.href);
 		if (!match || !match[0]) {
 			warn(`Cannot find subreddit URL in "${document.location.href}".`);
-			return '';
+			return undefined;
 		}
 		return match[2];
 	}
@@ -98,14 +98,13 @@
 
 	function replaceOnNewPage() {
 		log('Replacing on new page', document.location.href);
-		const srNameRegex = /https:[/][/](www|old|new|sh)[.]reddit[.]com[/]r[/](\w+)/g;
-		const match = srNameRegex.exec(document.location.href);
-		if (!match || !match[0]) {
+		const maybeSrName = getSrName();
+		if (!maybeSrName) {
 			warn(`Cannot find subreddit URL in "${document.location.href}". Resetting the icon to the default.`);
 			resetToDefaultIcon();
 			return;
 		}
-		srName = match[2];
+		srName = maybeSrName;
 		if (SPECIAL_NAMES.includes(srName)) {
 			log(`Detected special subreddit "${srName}". Resetting the icon to the default.`);
 			resetToDefaultIcon();
