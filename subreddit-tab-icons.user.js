@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Subreddit tab icons
 // @description  Replaces tab icons (favicons) on reddit with icons of subreddits.
-// @version      7
+// @version      8
 // @license      MIT
 // @author       Andrei Rybak
 // @match        https://www.reddit.com/*
@@ -218,12 +218,13 @@
 		 * For new.reddit.com
 		 */
 		function replaceFaviconNew() {
-			const srIcon = document.querySelector('img[alt="Subreddit-Symbol"]');
+			const srIcon = document.querySelector('img[alt="Subreddit-Symbol"], img.shreddit-subreddit-icon__icon');
 			if (!srIcon) {
 				warn("Couldn't find the icon in HTML of New Reddit.");
 				tryAgain(replaceFaviconOld);
 				return;
 			}
+			info("Using the icon from HTML.");
 			setFavicon(srIcon.src, replaceFaviconOld);
 		}
 
