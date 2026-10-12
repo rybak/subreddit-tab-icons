@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Subreddit tab icons
 // @description  Replaces tab icons (favicons) on reddit with icons of subreddits.
-// @version      8
+// @version      9
 // @license      MIT
 // @author       Andrei Rybak
 // @match        https://www.reddit.com/*
@@ -18,7 +18,7 @@
 // ==/UserScript==
 
 /*
- * Copyright (c) 2023-2025 Andrei Rybak
+ * Copyright (c) 2023-2026 Andrei Rybak
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -110,7 +110,8 @@
 			resetToDefaultIcon();
 			return;
 		}
-		srDataUrl = `https://www.reddit.com/r/${srName}/about.json`;
+		const domain = document.location.hostname === 'old.reddit.com' ? 'old.reddit.com' : 'www.reddit.com';
+		srDataUrl = `https://${domain}/r/${srName}/about.json`;
 		replaceFavicon();
 	}
 
